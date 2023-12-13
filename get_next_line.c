@@ -3,14 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: pmarkaide <pmarkaid@student.hive.fi>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 14:56:05 by pmarkaid          #+#    #+#             */
-/*   Updated: 2023/12/12 17:03:12 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2023/12/13 14:26:51 by pmarkaide        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include <fcntl.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
 
 //read_file, BUFFER_SIZE size, save to buffer
 //process buffer
@@ -27,41 +32,40 @@
 			// return line
 			// update buffer pointer
 
-char *load_buffer(int fd)
+char *load_buffer(int fd, char *reminder)
 {
 	ssize_t	bytes_read;
-	ssize_t	total_len;
-	char buffer[BUFFER_SIZE + 1];
-	char *old_buffer;
+	ssize_t	reminder_len;
+	char buffer[BUFFER_SIZE];
 	char *new_buffer;
-
+	
+	reminder_len = 0;
 	bytes_read = read(fd, buffer, BUFFER_SIZE);
 	while(bytes_read > 0)
 	{
-		total_len = ft_strlen(old_buffer + BUFFER_SIZE);
-		new_buffer = malloc(sizeof(char) * (total_len + 1));
+		if(reminder)
+			reminder_len = ft_strlen(reminder);
+		new_buffer = malloc(sizeof(char) * (reminder_len + BUFFER_SIZE + 1));
 		if (!new_buffer)
 			return(NULL);
-		ft_memcpy(new_buffer, old_buffer, total_len - BUFFER_SIZE);
-		ft_memcpy(new_buffer, buffer, BUFFER_SIZE);
-		if (ft_strchr(new_buffer, '\n') == NULL)
+		ft_memcpy(new_buffer, reminder, reminder_len);
+		ft_memcpy(new_buffer + reminder_len, buffer, BUFFER_SIZE + 1);
+		new_buffer[reminder_len + BUFFER_SIZE] = '\0';
+		if (ft_strchr(new_buffer, '\n') != NULL)
 			break;
+		free(reminder);
+		reminder = new_buffer;
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
 	}
+	free(reminder);
 	return (new_buffer);
 }
 
-
-
-
 char *get_next_line(int fd)
 {
-	char *buffer;
-	char *line;
+	static char *reminder;
 
-	buffer = load_buffer(fd);
-	line =	parse_line;
-	buffer = update_buffer;
-	
-	return (line);
+	reminder = NULL;
+	reminder = load_buffer(fd, reminder);
+	return(reminder);
 }
