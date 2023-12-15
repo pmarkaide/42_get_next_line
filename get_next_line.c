@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmarkaide <pmarkaid@student.hive.fi>       +#+  +:+       +#+        */
+/*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 14:56:05 by pmarkaid          #+#    #+#             */
-/*   Updated: 2023/12/14 19:40:08 by pmarkaide        ###   ########.fr       */
+/*   Updated: 2023/12/15 13:52:47 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-
-//read_file, BUFFER_SIZE size, save to buffer
-//process buffer
-	//A.Scenario: buffer is longer than line
-	//search for newline position
-		// if no newline
-			// return buffer
-		// if newline
-			// return until newline
-			// update buffer pointer
-	//B.Scenario: buffer is shorter than line
-	//read more buffer and append to buffer
-		// if newline
-			// return line
-			// update buffer pointer
 
 char *load_buffer(int fd, char *remainder)
 {
@@ -46,20 +31,21 @@ char *load_buffer(int fd, char *remainder)
 		if(remainder)
 			remainder_len = ft_strlenc(remainder, '\0');
 		new_buffer = malloc(sizeof(char) * (remainder_len + bytes_read + 1));
+		//printf("bytes read: %zd\n", bytes_read);
 		if (!new_buffer)
 			return(NULL);
 		ft_memmove(new_buffer, remainder, remainder_len);
 		ft_memmove(new_buffer + remainder_len, buffer, bytes_read);
 		new_buffer[remainder_len + bytes_read] = '\0';
-		if (ft_strchr(new_buffer, '\n') != NULL)
-				break;
-   		if (remainder)
-        	free(remainder);
-    	remainder = new_buffer;
+		free(remainder);
+		remainder = new_buffer;
+		if (ft_strchr(new_buffer, '\n') != NULL || bytes_read < BUFFER_SIZE)
+			break;
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
+		//printf("buffer: %s\n", new_buffer);
 	}
-	printf("Buffer is: %s\n", new_buffer);
-	return (new_buffer);
+	//printf("Buffer is: %s\n", new_buffer);
+	return (remainder);
 }
 
 char *get_line(char *remainder)
@@ -67,7 +53,7 @@ char *get_line(char *remainder)
 	size_t line_len;
 	char *line;
 
-	line_len = ft_strlenc(remainder, '\n');
+	line_len = ft_strlenc(remainder, '\n') + 1;
 	line = malloc(sizeof(char) * (line_len + 1));
 	if (!line)
 		return(NULL);
@@ -82,14 +68,16 @@ char *update_remainder(char *remainder)
 	char *new_line;
 	size_t remainder_len;
 	
-	new_line = ft_strchr(remainder, '\n') + 1;
+	if (ft_strchr(remainder, '\n') == NULL)
+		return (NULL);
+	new_line = ft_strchr(remainder, '\n');
 	remainder_len = ft_strlenc(new_line, '\0');
 	new_remainder = malloc(sizeof(char) * (remainder_len + 1));
-	if (new_line != NULL)
-		ft_memmove(new_remainder, new_line, remainder_len);
-	else
-		new_remainder = remainder;
+	if (!new_remainder)
+		return(NULL);
+	ft_memmove(new_remainder, new_line + 1, remainder_len);
 	free(remainder);
+	//printf("updated remainder is: %s\n", new_remainder);
 	return(new_remainder);	
 }
 
@@ -103,30 +91,32 @@ char *get_next_line(int fd)
 	remainder = load_buffer(fd, remainder);
 	line = get_line(remainder);
 	remainder = update_remainder(remainder);
+	if (remainder == NULL)
+		return(NULL);
 	return(line);
 }
 
-int main()
-{
-    int fd;
-   char *line;
+// int main()
+// {
+//    int fd;
+//    char *line;
 
-    fd = open("file.txt", O_RDONLY);
-    if (fd == -1)
-    {
-        perror("Error opening file");
-        return 1; // Return an error code
-    }
+//     fd = open("file.txt", O_RDONLY);
+//     if (fd == -1)
+//     {
+//         perror("Error opening file");
+//         return 1; // Return an error code
+//     }
 
-    while ((line = get_next_line(fd)) != NULL)
-    {
-        //printf("%s", line);
-        free(line);
-    }
+//     while ((line = get_next_line(fd)) != NULL)
+//     {
+//         printf("%s", line);
+//         free(line);
+//     }
 
-	//printf("%s", get_next_line(fd));
+// 	//printf("%s", get_next_line(fd));
 	
-    close(fd); // Close the file descriptor after the loop
+//     close(fd); // Close the file descriptor after the loop
 
-    return 0;
-}
+//     return 0;
+// }

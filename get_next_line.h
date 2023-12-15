@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmarkaide <pmarkaid@student.hive.fi>       +#+  +:+       +#+        */
+/*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 14:49:24 by pmarkaid          #+#    #+#             */
-/*   Updated: 2023/12/14 12:40:44 by pmarkaide        ###   ########.fr       */
+/*   Updated: 2023/12/15 13:52:17 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <unistd.h>
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1 
+#  define BUFFER_SIZE 800
 # endif
 
 char	*get_next_line(int fd);
