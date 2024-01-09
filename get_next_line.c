@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 14:56:05 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/01/09 12:24:45 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/01/09 15:57:58 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	*load_buffer(int fd, char *remainder)
 			remainder_len = ft_strlenc(remainder, '\0');
 		new_buffer = malloc(sizeof(char) * (remainder_len + bytes_read + 1));
 		if (!new_buffer)
-			return (NULL);
+			return (ft_free(&remainder));
 		ft_memmove(new_buffer, remainder, remainder_len);
 		ft_memmove(new_buffer + remainder_len, buffer, bytes_read);
 		new_buffer[remainder_len + bytes_read] = '\0';
@@ -44,10 +44,7 @@ char	*load_buffer(int fd, char *remainder)
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
 	}
 	if (bytes_read == -1)
-	{
-		free(remainder);
-		return (NULL);
-	}
+		return (ft_free(&remainder));
 	return (remainder);
 }
 
@@ -57,11 +54,11 @@ char	*get_line2(char *remainder)
 	char	*line;
 
 	if (!remainder)
-		return (NULL);
+		return (ft_free(&remainder));
 	line_len = ft_strlenc(remainder, '\n') + 1;
 	line = malloc(sizeof(char) * (line_len + 1));
 	if (!line)
-		return (NULL);
+		return (ft_free(&remainder));
 	ft_memmove(line, remainder, line_len);
 	line[line_len] = '\0';
 	return (line);
@@ -75,18 +72,12 @@ char	*update_remainder(char *remainder)
 
 	new_line = ft_strchr(remainder, '\n');
 	if (!new_line)
-	{
-		free(remainder);
-		return (NULL);
-	}
+		return (ft_free(&remainder));
 	new_line = ft_strchr(remainder, '\n');
 	remainder_len = ft_strlenc(new_line, '\0');
 	new_remainder = malloc(sizeof(char) * (remainder_len + 1));
 	if (!new_remainder)
-	{
-		free(remainder);
-		return (NULL);
-	}
+		return (ft_free(&remainder));
 	ft_memmove(new_remainder, new_line + 1, remainder_len);
 	free(remainder);
 	return (new_remainder);
@@ -101,18 +92,10 @@ char	*get_next_line(int fd)
 		return (NULL);
 	remainder = load_buffer(fd, remainder);
 	if (!remainder || *remainder == '\0')
-	{
-		free(remainder);
-		remainder = NULL;
-		return (NULL);
-	}
+		return (ft_free(&remainder));
 	line = get_line2(remainder);
 	if (!line)
-	{
-		free(remainder);
-		remainder = NULL;
-		return (NULL);
-	}
+		return (ft_free(&remainder));
 	remainder = update_remainder(remainder);
 	return (line);
 }

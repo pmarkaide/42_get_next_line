@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 14:49:24 by pmarkaid          #+#    #+#             */
-/*   Updated: 2023/12/15 13:52:17 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/01/09 15:47:52 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 
 char	*get_next_line(int fd);
 
+char	*ft_free(char **str);
 size_t	ft_strlenc(const char *s, char c);
 char	*ft_strchr(const char *s, int c);
 void	*ft_memmove(void *dst, const void *src, size_t len);

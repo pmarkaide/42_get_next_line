@@ -3,14 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmarkaide <pmarkaid@student.hive.fi>       +#+  +:+       +#+        */
+/*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 14:56:10 by pmarkaid          #+#    #+#             */
-/*   Updated: 2023/12/14 12:42:41 by pmarkaide        ###   ########.fr       */
+/*   Updated: 2024/01/09 15:47:34 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+char	*ft_free(char **str)
+{
+	free(*str);
+	*str = NULL;
+	return (NULL);
+}
 
 size_t	ft_strlenc(const char *s, char c)
 {
