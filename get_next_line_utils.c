@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 14:56:10 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/01/09 15:47:34 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/01/09 16:33:57 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ size_t	ft_strlenc(const char *s, char c)
 {
 	int	i;
 
+	if (s == NULL)
+        return (0);
 	i = 0;
 	while (s[i] != c && s[i] != '\0')
 		i++;

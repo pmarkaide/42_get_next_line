@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 14:56:05 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/01/09 15:57:58 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/01/09 16:41:38 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,10 @@ char	*load_buffer(int fd, char *remainder)
 	char	buffer[BUFFER_SIZE];
 	char	*new_buffer;
 
-	remainder_len = 0;
-	new_buffer = NULL;
 	bytes_read = read(fd, buffer, BUFFER_SIZE);
 	while (bytes_read > 0)
 	{
-		if (remainder)
-			remainder_len = ft_strlenc(remainder, '\0');
+		remainder_len = ft_strlenc(remainder, '\0');
 		new_buffer = malloc(sizeof(char) * (remainder_len + bytes_read + 1));
 		if (!new_buffer)
 			return (ft_free(&remainder));
