@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 14:56:05 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/01/09 16:41:38 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/01/10 10:08:02 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,18 @@ char	*load_buffer(int fd, char *remainder)
 char	*get_line2(char *remainder)
 {
 	size_t	line_len;
+	char	*newline;
 	char	*line;
 
 	if (!remainder)
 		return (ft_free(&remainder));
-	line_len = ft_strlenc(remainder, '\n') + 1;
+	line_len = ft_strlenc(remainder, '\n');	
+	newline = ft_strchr(remainder, '\n');
+	if(newline)
+		line_len += 1;
 	line = malloc(sizeof(char) * (line_len + 1));
 	if (!line)
-		return (ft_free(&remainder));
+		return (NULL);
 	ft_memmove(line, remainder, line_len);
 	line[line_len] = '\0';
 	return (line);
