@@ -24,7 +24,7 @@ size_t	ft_strlenc(const char *s, char c)
 	int	i;
 
 	if (s == NULL)
-        return (0);
+		return (0);
 	i = 0;
 	while (s[i] != c && s[i] != '\0')
 		i++;

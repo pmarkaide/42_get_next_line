@@ -6,14 +6,14 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 14:49:24 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/01/09 15:47:52 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/01/10 10:52:14 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
+# include <fcntl.h>
 # include <stdlib.h>
 # include <unistd.h>
 

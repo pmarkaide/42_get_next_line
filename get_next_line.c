@@ -6,16 +6,11 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 14:56:05 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/01/10 10:08:02 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/01/10 10:51:51 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <fcntl.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
 
 char	*load_buffer(int fd, char *remainder)
 {
@@ -53,9 +48,9 @@ char	*get_line2(char *remainder)
 
 	if (!remainder)
 		return (ft_free(&remainder));
-	line_len = ft_strlenc(remainder, '\n');	
+	line_len = ft_strlenc(remainder, '\n');
 	newline = ft_strchr(remainder, '\n');
-	if(newline)
+	if (newline)
 		line_len += 1;
 	line = malloc(sizeof(char) * (line_len + 1));
 	if (!line)
