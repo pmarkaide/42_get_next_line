@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 14:56:05 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/01/10 11:10:01 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/01/10 17:09:45 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	*load_buffer(int fd, char *remainder)
 		new_buffer[remainder_len + bytes_read] = '\0';
 		free(remainder);
 		remainder = new_buffer;
-		if (ft_strchr(new_buffer, '\n') != NULL || bytes_read < BUFFER_SIZE)
+		if (ft_strchr(remainder, '\n') != NULL || bytes_read < BUFFER_SIZE)
 			break ;
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
 	}
@@ -63,18 +63,17 @@ char	*parse_line(char *remainder)
 char	*update_remainder(char *remainder)
 {
 	char	*new_remainder;
-	char	*new_line;
+	char	*newline;
 	size_t	remainder_len;
 
-	new_line = ft_strchr(remainder, '\n');
-	if (!new_line)
+	newline = ft_strchr(remainder, '\n');
+	if (!newline)
 		return (ft_free(&remainder));
-	new_line = ft_strchr(remainder, '\n');
-	remainder_len = ft_strlenc(new_line, '\0');
+	remainder_len = ft_strlenc(newline, '\0');
 	new_remainder = malloc(sizeof(char) * (remainder_len + 1));
 	if (!new_remainder)
 		return (ft_free(&remainder));
-	ft_memmove(new_remainder, new_line + 1, remainder_len);
+	ft_memmove(new_remainder, newline + 1, remainder_len);
 	free(remainder);
 	return (new_remainder);
 }
