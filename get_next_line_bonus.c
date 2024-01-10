@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 10:54:48 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/01/10 10:57:29 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/01/10 11:14:51 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	*load_buffer(int fd, char *remainder)
 	return (remainder);
 }
 
-char	*get_line2(char *remainder)
+char	*parse_line(char *remainder)
 {
 	size_t	line_len;
 	char	*newline;
@@ -89,7 +89,7 @@ char	*get_next_line(int fd)
 	remainder[fd] = load_buffer(fd, remainder[fd]);
 	if (!remainder[fd] || *remainder[fd] == '\0')
 		return (ft_free(&remainder[fd]));
-	line = get_line2(remainder[fd]);
+	line = parse_line(remainder[fd]);
 	if (!line)
 		return (ft_free(&remainder[fd]));
 	remainder[fd] = update_remainder(remainder[fd]);
