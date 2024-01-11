@@ -6,11 +6,11 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 10:54:48 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/01/10 17:06:21 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/01/11 11:07:42 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*load_buffer(int fd, char *remainder)
 {
